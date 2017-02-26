@@ -12,6 +12,7 @@ from testcase.admin_login_logout.admin_login_correction import AdminLoginCorrect
 from testcase.admin_login_logout.admin_login_failure import AdminLoginFail
 
 def suite():
+    u"""创建测试套"""
     test_suite = unittest.TestSuite()
     loader = unittest.TestLoader()
     test_suite.addTests(loader.loadTestsFromTestCase(AdminLoginCorrection))
@@ -20,7 +21,7 @@ def suite():
 
 if __name__ == '__main__':
     logger = Logger().getlog()
-    logger.info('测试开始...')
+    logger.info(u'测试开始...')
 
     #生成HTML格式的测试报告
     report_path = './result/test_result_%s.html' % time.strftime("%Y-%m-%d %H-%M-%S")
@@ -30,11 +31,5 @@ if __name__ == '__main__':
                             description=u'测试用例执行情况：')
     runner.run(suite())
     fp.close()
-
-
-
-
-
-
-    logger.info('测试结束。')
+    logger.info(u'测试结束。')
 

@@ -6,7 +6,7 @@ import time
 import logging
 
 class Logger(object):#object是所有类的基类
-    def __init__(self, logname='./log/logger.log',loglevel=logging.DEBUG):
+    def __init__(self, logname='./log/logger.log', loglevel=logging.DEBUG):
         """
             定义初始化函数。
             两个参数logname和loglevel都配置了默认值。
@@ -37,7 +37,7 @@ class Logger(object):#object是所有类的基类
         #给logger添加handler
         self.logger.addHandler(fh)
         self.logger.addHandler(ch)
-
+        
     def getlog(self):
         return  self.logger
 
@@ -48,6 +48,8 @@ class Logger(object):#object是所有类的基类
 if __name__ == '__main__':
     logger = Logger("product.log", logging.DEBUG).getlog()
     logger.info('info message')
+    logger.info(u'测试开始')
+    logger.info(u'测试结束')
     logger.error("error message")
     logger.warn("warn message")
     logger.critical("critical message")
