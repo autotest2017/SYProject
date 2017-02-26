@@ -10,6 +10,9 @@ from lib.Logger import Logger
 from lib.HTMLTestRunner import HTMLTestRunner
 from testcase.admin_login_logout.admin_login_correction import AdminLoginCorrection
 from testcase.admin_login_logout.admin_login_failure import AdminLoginFail
+from lib.sendmail import send_email
+from config import *
+
 
 def suite():
     u"""创建测试套"""
@@ -18,6 +21,7 @@ def suite():
     test_suite.addTests(loader.loadTestsFromTestCase(AdminLoginCorrection))
     test_suite.addTests(loader.loadTestsFromTestCase(AdminLoginFail))
     return test_suite
+
 
 if __name__ == '__main__':
     logger = Logger().getlog()
@@ -31,5 +35,6 @@ if __name__ == '__main__':
                             description=u'测试用例执行情况：')
     runner.run(suite())
     fp.close()
+    send_email(FROM_ADDR, FROM_PSWD, TO_ADDR, u"测试报告模版", report_path, mode="html")
     logger.info(u'测试结束。')
 
