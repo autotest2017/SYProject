@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# coder: samren
+# coder:sun
 # version : 1.0
 import unittest
 from selenium import webdriver
-
+from lib.Pil import get_screen_shot
 
 class AdminLoginCorrection(unittest.TestCase):
 
@@ -29,6 +29,7 @@ class AdminLoginCorrection(unittest.TestCase):
         sdr.find_element_by_id('LoginForm_password').send_keys('123456')
         sdr.find_element_by_id('SubmitLoginBTN').click()
         self.assertEqual('BugFree', sdr.title)
+        get_screen_shot(u'测试管理员用户是否能成功登录')
 
     def test_admin_welcome_content(self):
         u"""测试管理员登录后，欢迎信息是否正确"""
@@ -40,18 +41,23 @@ class AdminLoginCorrection(unittest.TestCase):
         sdr.find_element_by_id('LoginForm_password').send_keys('123456')
         sdr.find_element_by_id('SubmitLoginBTN').click()
         self.assertRegexpMatches(sdr.find_element_by_css_selector("BODY").text, r"^[\s\S]*欢迎,  系统管理员 | [\s\S]*$")
+        get_screen_shot(u'测试管理员登录后，欢迎信息是否正确')
 
     def test_admin_logout(self):
         u"""测试管理员退出以后，能否正确跳转"""
-        sdr = self.driver
-        sdr.get(self.base_url + 'bugfree')
-        sdr.find_element_by_id('LoginForm_username').clear()
-        sdr.find_element_by_id('LoginForm_username').send_keys('admin')
-        sdr.find_element_by_id('LoginForm_password').clear()
-        sdr.find_element_by_id('LoginForm_password').send_keys('123456')
-        sdr.find_element_by_id('SubmitLoginBTN').click()
-        sdr.find_element_by_partial_link_text(u'退出').click()
-        self.assertEqual(u'登录 - BugFree', sdr.title)
+        try:
+            sdr = self.driver
+            sdr.get(self.base_url + 'bugfree')
+            sdr.find_element_by_id('LoginForm_username').clear()
+            sdr.find_element_by_id('LoginForm_username').send_keys('admin')
+            sdr.find_element_by_id('LoginForm_password').clear()
+            sdr.find_element_by_id('LoginForm_password').send_keys('123456')
+            sdr.find_element_by_id('SubmitLoginBTN').click()
+            sdr.find_element_by_partial_link_text(u'退出').click()
+            self.assertEqual(u'登录 - BugFree', sdr.title)
+            get_screen_shot(u'测试管理员退出以后，能否正确跳转')
+        except Exception as e:
+            get_screen_shot(u"Exception_test_bugfree_login1")
 
 
 if __name__ == '__main__':
